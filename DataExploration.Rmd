@@ -1,0 +1,46 @@
+---
+title: "Data Exploration"
+author: "Laura Fisher"
+date: "2026-09-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(lattice)
+```
+
+```{r}
+## 2026 Migration Data at Smith Pond, Rockville Center 
+m.count <- read_excel("MigrationMonitoring2026.xlsx", sheet = "SmithPondOfficialCount")
+m.size <- read_excel("MigrationMonitoring2026.xlsx", sheet = "ElverSize")
+```
+
+```{r}
+#Elver Size 
+
+#research hypothesis - I expect that the upstream eels will be larger than the downstream eels 
+#variables - "Date" is a categorical (?), "Location" is a categorical focal predictor, and "Size" is the response variable and continuous, numeric measured in mm. 
+
+as.Date(m.size$Date)
+barplot(table(m.size$Date), col = "blue")
+barplot(table(m.size$Location), col = "blue")
+#as seen in the bar plots , there is some sampling was highly unbalanced due to the nature of ecological monitoring data - but at this point I don't know how to fix it 
+
+boxplot(m.size$Size, col = "blue")
+bwplot(m.size$Size ~ m.size$Location)
+#no apparent outliers, but definitely uneven variance between the locations 
+
+plot(m.size$Size ~ m.size$Date, col = as.numeric(as.factor(m.size$Location)), pch = as.numeric(as.factor(m.size$Location)))
+legend("topleft", legend = c("Downstream", "Upstream"), col = 1:2, pch = 1:2)
+#no immediate relationship between date and size, but definitely can still see the unbalanced sampling, as a lot more elvers showed up on certain days in june but none made it upstream
+```
+
+```{r}
+#Elver Size 
+
+#research hypothesis - I expect that there are more downstream eels than upstream eels and that the relative count over time will mirror the trends from previous seasons (somewhat normal peaking in mid march)
+#variables -  
+```
+
